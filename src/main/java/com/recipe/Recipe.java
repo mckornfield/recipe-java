@@ -5,10 +5,10 @@ import java.util.List;
 
 public class Recipe {
     private final List<Ingredient> ingredients;
-    private final List<String> steps;
+    private final List<Step> steps;
     private final CookedFood cookedFood;
 
-    public Recipe(List<Ingredient> ingredients, List<String> steps, CookedFood cookedFood) {
+    public Recipe(List<Ingredient> ingredients, List<Step> steps, CookedFood cookedFood) {
         this.ingredients = ingredients;
         this.steps = steps;
         this.cookedFood = cookedFood;
@@ -18,11 +18,11 @@ public class Recipe {
         return ingredients;
     }
 
-    public List<String> getSteps() {
+    public List<Step> getSteps() {
         return steps;
     }
 
-    public CookedFood cook() {
+    public CookedFood getCookedFood() {
         return cookedFood;
     }
 
@@ -32,8 +32,14 @@ public class Recipe {
 
     static class Builder {
         private List<Ingredient> ingredients = new ArrayList<>();
-        private List<String> steps = new ArrayList<>();
+        private List<Step> steps = new ArrayList<>();
         private CookedFood cookedFood;
+
+        Builder withIngredient(Ingredient newIngredient) {
+            Ingredient ingredient = Ingredient.of(newIngredient);
+            ingredients.add(ingredient);
+            return this;
+        }
 
         Builder withIngredient(String name, int number, Ingredient.ServingType servingType) {
             Ingredient ingredient = Ingredient.of(name, number, servingType);
@@ -41,7 +47,8 @@ public class Recipe {
             return this;
         }
 
-        Builder step(String step) {
+        Builder step(Step.Action action, List<Ingredient> ingredientsForStep, Step.Container container) {
+            Step step = new Step(action, ingredientsForStep, container);
             steps.add(step);
             return this;
         }

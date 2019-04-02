@@ -48,7 +48,7 @@ public class Ingredient {
     public double removeAmount(double removedAmount) {
         double newAmount = this.amount - removedAmount;
         if (newAmount < 0) {
-            throw new NotEnoughFoodException();
+            throw new NotEnoughFoodException("There is not enough food in the kitchen for " + this.ingredientName);
         }
         this.amount = newAmount;
         return this.amount;
@@ -63,11 +63,16 @@ public class Ingredient {
     }
 
     public String getIngredientIdentifier() {
-        return ingredientName + "-" + servingType;
+        return servingType + "-" + ingredientName;
     }
 
-    public boolean areOfSameItemAndQuantity(Ingredient other){
+    public boolean areOfSameItemAndQuantity(Ingredient other) {
         return getIngredientIdentifier().equals(other.getIngredientIdentifier());
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s %s of %s", amount, servingType, ingredientName);
     }
 
     @Override

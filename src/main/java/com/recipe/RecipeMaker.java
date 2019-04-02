@@ -10,15 +10,15 @@ import java.util.Optional;
 
 public class RecipeMaker {
     public CookedFood makeFood(Recipe recipe, List<Ingredient> ingredients) {
-        List<String> steps = recipe.getSteps();
-        for (String step : steps) {
-            doStep(step); // TODO: Consider how to use ingredients? Maybe doStep() consumes the ingredients? Step needs new data structure
+        List<Step> steps = recipe.getSteps();
+        for (Step step : steps) {
+            doStep(step);
         }
-        CookedFood cook = recipe.cook();
+        CookedFood cook = recipe.getCookedFood();
         return cook;
     }
 
-    private void doStep(String step) {
+    private void doStep(Step step) {
         System.out.println("Current Step: " + step);
     }
 
@@ -30,9 +30,12 @@ public class RecipeMaker {
                 filter(availIngred -> availIngred.areOfSameItemAndQuantity(requiredIngredient))
                 .findFirst();
 
-            Ingredient matchingAvailableIngredient = opIng.orElseThrow(MissingFoodException::new);
+            Ingredient matchingAvailableIngredient =
+                opIng.orElseThrow(() -> new MissingFoodException(requiredIngredient));
+            // Only works if ingredient is only listed once in a recipe
             if (matchingAvailableIngredient.getAmount() < requiredIngredient.getAmount()) {
-                throw new NotEnoughFoodException("Need more of " + requiredIngredient.getIngredientName());
+                throw new NotEnoughFoodException("Need more of " + requiredIngredient.getIngredientIdentifier() + ", currently we only have " +
+                    matchingAvailableIngredient.getAmount() + " but we need " + requiredIngredient.getAmount());
             }
 
         }

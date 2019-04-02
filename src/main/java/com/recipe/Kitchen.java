@@ -17,7 +17,7 @@ public class Kitchen {
             if (mapOfIngredients.containsKey(ingredientIdentifier)) {
                 mapOfIngredients.get(ingredientIdentifier).removeAmount(ingredient.getAmount());
             } else {
-                throw new MissingFoodException();
+                throw new MissingFoodException(ingredientIdentifier);
             }
         }
     }
