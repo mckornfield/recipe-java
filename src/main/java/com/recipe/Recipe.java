@@ -14,6 +14,17 @@ public class Recipe {
         this.cookedFood = cookedFood;
     }
 
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public List<String> getSteps() {
+        return steps;
+    }
+
+    public CookedFood cook() {
+        return cookedFood;
+    }
 
     public static Builder builder() {
         return new Builder();

@@ -66,6 +66,10 @@ public class Ingredient {
         return ingredientName + "-" + servingType;
     }
 
+    public boolean areOfSameItemAndQuantity(Ingredient other){
+        return getIngredientIdentifier().equals(other.getIngredientIdentifier());
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(amount, ingredientName, servingType);
