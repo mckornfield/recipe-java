@@ -33,5 +33,8 @@ public class Main {
 
         recipeMaker.canMakeFood(recipe, kitchen.getIngredientsInKitchen());
         CookedFood cookedFood = recipeMaker.makeFood(recipe, kitchen.getIngredientsInKitchen());
+
+        System.out.println("Now serving: " + cookedFood.getName() + " for "
+                + cookedFood.getServingSize() + " people! Enjoy!");
     }
 }
